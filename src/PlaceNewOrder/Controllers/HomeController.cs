@@ -11,6 +11,15 @@ namespace PlaceNewOrder.Controllers
 {
     public class HomeController : Controller
     {
+        private CustomerRepository _customerRepository;
+        private OrderRepository _orderRepository;
+
+        public HomeController()
+        {
+            _customerRepository = new CustomerRepository();
+            _orderRepository = new OrderRepository();
+        }
+
         public IActionResult Index()
         {
             return View();
@@ -18,7 +27,6 @@ namespace PlaceNewOrder.Controllers
 
         public IActionResult PlaceOrder(PlaceOrderViewModel newOrder)
         {
-            
             // -- If this is a new customer, create the customer record --
             if (string.IsNullOrEmpty(newOrder.Nom))
             {
@@ -26,17 +34,17 @@ namespace PlaceNewOrder.Controllers
                 return View("Index", newOrder);
             }
 
-            var crepo = new CustomerRepository();
+            //var crepo = new CustomerRepository();
 
             Customer c;
 
             if (newOrder.CustomerId != Guid.Empty)
             {
-                c = crepo.GetCustomerById(newOrder.CustomerId);
+                c = _customerRepository.GetCustomerById(newOrder.CustomerId);
             }
             else
             {
-                c = crepo.GetCustomerByName(newOrder.Nom);
+                c = _customerRepository.GetCustomerByName(newOrder.Nom);
             }
 
             if (c == null)
@@ -47,7 +55,7 @@ namespace PlaceNewOrder.Controllers
                 newCustomer.Courriel = newOrder.Nom;
                 newCustomer.Adresse = newOrder.Nom;
 
-                c = crepo.SaveNewCustomer(newCustomer);
+                c = _customerRepository.SaveNewCustomer(newCustomer);
             }
 
             // -- Create the order for the customer. --
@@ -63,14 +71,14 @@ namespace PlaceNewOrder.Controllers
                 return View("Index", newOrder);
             }
             
-            var orepo = new OrderRepository();
+            //var orepo = new OrderRepository();
 
-            Order o = orepo.CreateNewOrder(c);
+            Order o = _orderRepository.CreateNewOrder(c);
 
             o.Prod = newOrder.Produit;
             o.Qty = newOrder.Quantite;
 
-            orepo.Save(o);
+            _orderRepository.Save(o);
 
             return View(nameof(Index));
         }
