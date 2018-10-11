@@ -7,6 +7,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{CFD55D37-EB6
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlaceNewOrder", "src\PlaceNewOrder\PlaceNewOrder.csproj", "{2AE13559-EC69-41A8-9431-2960B0F660BD}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{8C436AE2-015C-4DE9-836A-866169AE8946}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlaceNewOrder.Tests", "tests\PlaceNewOrder.Tests\PlaceNewOrder.Tests.csproj", "{BE05D606-984D-47AC-A543-4F3C4F075B50}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,8 +36,21 @@ Global
 		{2AE13559-EC69-41A8-9431-2960B0F660BD}.Release|x64.Build.0 = Release|Any CPU
 		{2AE13559-EC69-41A8-9431-2960B0F660BD}.Release|x86.ActiveCfg = Release|Any CPU
 		{2AE13559-EC69-41A8-9431-2960B0F660BD}.Release|x86.Build.0 = Release|Any CPU
+		{BE05D606-984D-47AC-A543-4F3C4F075B50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE05D606-984D-47AC-A543-4F3C4F075B50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE05D606-984D-47AC-A543-4F3C4F075B50}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{BE05D606-984D-47AC-A543-4F3C4F075B50}.Debug|x64.Build.0 = Debug|Any CPU
+		{BE05D606-984D-47AC-A543-4F3C4F075B50}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BE05D606-984D-47AC-A543-4F3C4F075B50}.Debug|x86.Build.0 = Debug|Any CPU
+		{BE05D606-984D-47AC-A543-4F3C4F075B50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE05D606-984D-47AC-A543-4F3C4F075B50}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE05D606-984D-47AC-A543-4F3C4F075B50}.Release|x64.ActiveCfg = Release|Any CPU
+		{BE05D606-984D-47AC-A543-4F3C4F075B50}.Release|x64.Build.0 = Release|Any CPU
+		{BE05D606-984D-47AC-A543-4F3C4F075B50}.Release|x86.ActiveCfg = Release|Any CPU
+		{BE05D606-984D-47AC-A543-4F3C4F075B50}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{2AE13559-EC69-41A8-9431-2960B0F660BD} = {CFD55D37-EB6F-4CA0-9BEE-01309894CA44}
+		{BE05D606-984D-47AC-A543-4F3C4F075B50} = {8C436AE2-015C-4DE9-836A-866169AE8946}
 	EndGlobalSection
 EndGlobal
