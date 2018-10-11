@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace PlaceNewOrder.DataAccess
 {
-    public class CustomerRepository
+    public class CustomerRepository : ICustomerRepository
     {
         private static Dictionary<Guid, Customer> _customers = new Dictionary<Guid, Customer>();
 
@@ -18,7 +18,7 @@ namespace PlaceNewOrder.DataAccess
             return null;
         }
 
-        public Customer GetCustomerByName(string nom) => _customers.Values.FirstOrDefault(customer=>customer.Nom == nom);
+        public Customer GetCustomerByName(string nom) => _customers.Values.FirstOrDefault(customer=>customer.Firstname == nom);
 
         public Customer SaveNewCustomer(Customer newCustomer)
         {
