@@ -4,11 +4,11 @@ using System.Linq;
 
 namespace PlaceNewOrder.DataAccess
 {
-    public class OrderRepository
+    public class OrderRepository : IOrderRepository
     {
         private static Dictionary<Guid, Order> _orders = new Dictionary<Guid, Order>();
 
-        internal Order CreateNewOrder(Customer c)
+        public Order CreateNewOrder(Customer c)
         {
             var o = new Order();
             o.ClientId = c.Id;
@@ -17,7 +17,7 @@ namespace PlaceNewOrder.DataAccess
             return o;
         }
 
-        internal void Save(Order o)
+        public void Save(Order o)
         {
             _orders[o.Id] = o;
         }

@@ -11,14 +11,16 @@ namespace PlaceNewOrder.Controllers
 {
     public class HomeController : Controller
     {
-        private CustomerRepository _customerRepository;
-        private OrderRepository _orderRepository;
+        private ICustomerRepository _customerRepository;
+        private IOrderRepository _orderRepository;
 
-        public HomeController()
+        public HomeController(ICustomerRepository customerRepository, IOrderRepository orderRepository)
         {
-            _customerRepository = new CustomerRepository();
-            _orderRepository = new OrderRepository();
+            _customerRepository = customerRepository;
+            _orderRepository = orderRepository;
         }
+
+        public HomeController() : this(new CustomerRepository(), new OrderRepository()) { }
 
         public IActionResult Index()
         {
@@ -34,29 +36,16 @@ namespace PlaceNewOrder.Controllers
                 return View("Index", newOrder);
             }
 
-            //var crepo = new CustomerRepository();
-
-            Customer c;
-
-            if (newOrder.CustomerId != Guid.Empty)
+            var orderCustomer = new OrderCustomer
             {
-                c = _customerRepository.GetCustomerById(newOrder.CustomerId);
-            }
-            else
-            {
-                c = _customerRepository.GetCustomerByName(newOrder.Nom);
-            }
+                Id = newOrder.CustomerId,
+                Nom = newOrder.Nom,
+                Prenom = newOrder.Prenom,
+                Courriel = newOrder.Courriel,
+                Adresse = newOrder.Adresse,
+            };
 
-            if (c == null)
-            {
-                var newCustomer = new Customer();
-                newCustomer.Nom = newOrder.Nom;
-                newCustomer.Prenom = newOrder.Nom;
-                newCustomer.Courriel = newOrder.Nom;
-                newCustomer.Adresse = newOrder.Nom;
-
-                c = _customerRepository.SaveNewCustomer(newCustomer);
-            }
+            Customer customer = GetOrCreateCustomer(orderCustomer);
 
             // -- Create the order for the customer. --
             if (string.IsNullOrEmpty(newOrder.Produit))
@@ -70,17 +59,47 @@ namespace PlaceNewOrder.Controllers
                 ModelState.AddModelError(nameof(newOrder.Produit), "La quantité ne peut être inférieure à un.");
                 return View("Index", newOrder);
             }
-            
-            //var orepo = new OrderRepository();
 
-            Order o = _orderRepository.CreateNewOrder(c);
-
-            o.Prod = newOrder.Produit;
-            o.Qty = newOrder.Quantite;
-
-            _orderRepository.Save(o);
+            SaveOrder(newOrder, customer);
 
             return View(nameof(Index));
+        }
+
+        private void SaveOrder(PlaceOrderViewModel newOrder, Customer customer)
+        {
+            Order order = _orderRepository.CreateNewOrder(customer);
+
+            order.Prod = newOrder.Produit;
+            order.Qty = newOrder.Quantite;
+
+            _orderRepository.Save(order);
+        }
+
+        private Customer GetOrCreateCustomer(OrderCustomer orderCustomer)
+        {
+            Customer customer;
+
+            if (orderCustomer.Id != Guid.Empty)
+            {
+                customer = _customerRepository.GetCustomerById(orderCustomer.Id);
+            }
+            else
+            {
+                customer = _customerRepository.GetCustomerByName(orderCustomer.Nom);
+            }
+
+            if (customer == null)
+            {
+                var newCustomer = new Customer();
+                newCustomer.Lastname = orderCustomer.Nom;
+                newCustomer.Firstname = orderCustomer.Prenom;
+                newCustomer.Email = orderCustomer.Courriel;
+                newCustomer.Address = orderCustomer.Adresse;
+
+                customer = _customerRepository.SaveNewCustomer(newCustomer);
+            }
+
+            return customer;
         }
 
         public IActionResult Privacy()
