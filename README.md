@@ -1,4 +1,7 @@
-# from-legacy-to-hexagonal
-Source d'exemple pour l'article d'architecture hexagonale
+# Migrer du code legacy vers une architecture héxagonale
 
-## [Etape 1](https://github.com/niccou/from-legacy-to-hexagonal/tree/feature/ExtractionDependances)
+Source d'exemple pour l'article d'architecture hexagonale. Le but est d'expliquer étape par étape le cheminement de la modification.
+
+- _Etape 1 :_ [Extraction des dépendances](https://github.com/niccou/from-legacy-to-hexagonal/tree/feature/ExtractionDependances)
+
+    La première étape constiste à sortir les dépendances de la partie à modifier.
